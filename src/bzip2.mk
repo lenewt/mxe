@@ -7,14 +7,14 @@ $(PKG)_VERSION  := 1.0.6
 $(PKG)_CHECKSUM := 3f89f861209ce81a6bab1fd1998c0ef311712002
 $(PKG)_SUBDIR   := bzip2-$($(PKG)_VERSION)
 $(PKG)_FILE     := bzip2-$($(PKG)_VERSION).tar.gz
-$(PKG)_URL      := http://www.bzip.org/$($(PKG)_VERSION)/$($(PKG)_FILE)
+$(PKG)_URL      := https://sourceware.org/pub/bzip2/$($(PKG)_FILE)
 $(PKG)_DEPS     := gcc
 
 define $(PKG)_UPDATE
-    $(WGET) -q -O- 'http://www.bzip.org/downloads.html' | \
+    $(WGET) -q -O- 'https://sourceware.org/pub/bzip2/' | \
     grep 'bzip2-' | \
     $(SED) -n 's,.*bzip2-\([0-9][^>]*\)\.tar.*,\1,p' | \
-    head -1
+    tail -n1
 endef
 
 define $(PKG)_BUILD_COMMON
