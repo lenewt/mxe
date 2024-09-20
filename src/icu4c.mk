@@ -3,20 +3,16 @@
 
 PKG             := icu4c
 $(PKG)_IGNORE   :=
-$(PKG)_VERSION  := 54.1
+$(PKG)_VERSION  := 54.2
 $(PKG)_MAJOR    := $(word 1,$(subst ., ,$($(PKG)_VERSION)))
-$(PKG)_CHECKSUM := d42bc9a8ca6a91c55eb0925c279f49e5b508d51ef26ac9850d9be55de5bb8ab3
-$(PKG)_SUBDIR   := icu
-$(PKG)_FILE     := $(PKG)-$(subst .,_,$($(PKG)_VERSION))-src.tgz
-$(PKG)_URL      := http://download.icu-project.org/files/$(PKG)/$($(PKG)_VERSION)/$($(PKG)_FILE)
+$(PKG)_CHECKSUM := 9544367d7e62e958689102fe2f8a84a18fea0bd480318c6008ce0397b98f0398
+$(PKG)_SUBDIR   := icu-release-$(subst .,-,$($(PKG)_VERSION))/icu4c
+$(PKG)_FILE     := release-$(subst .,-,$($(PKG)_VERSION)).tar.gz
+$(PKG)_URL      := https://github.com/unicode-org/icu/archive/refs/tags/$($(PKG)_FILE)
 $(PKG)_DEPS     := gcc
 
 define $(PKG)_UPDATE
-    $(WGET) -q -O- 'http://bugs.icu-project.org/trac/browser/icu/tags' | \
-    $(SED) -n 's,.*release-\([0-9-]*\)<.*,\1,p' | \
-    tr '-' '.' | \
-    $(SORT) -V | \
-    tail -1
+    echo 54.2 # We don't want to update ICU and the version listing url is not available anyway
 endef
 
 define $(PKG)_BUILD_COMMON
