@@ -57,14 +57,14 @@ define $(PKG)_BUILD
             -plugin-sql-odbc \
             -plugin-sql-psql \
             -plugin-sql-tds -D Q_USE_SYBASE \
-            -system-zlib \
-            -system-libpng \
-            -system-libjpeg \
-            -system-sqlite \
+            -qt-zlib  \
+            -qt-libpng  \
+            -qt-libjpeg  \
+            -qt-sqlite  \
             -fontconfig \
-            -system-freetype \
-            -system-harfbuzz \
-            -system-pcre \
+            -system-freetype  \
+            -system-harfbuzz  \
+            -qt-pcre  \
             -openssl-linked \
             -dbus-linked \
             -no-pch \
