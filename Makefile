@@ -18,6 +18,7 @@ MXE_TARGETS        := i686-w64-mingw32.static
 DEFAULT_MAX_JOBS   := 6
 SOURCEFORGE_MIRROR := downloads.sourceforge.net
 PKG_MIRROR         := s3.amazonaws.com/mxe-pkg
+PKG_MIRROR_ALT     := www.lenewt.com/download/mxe-pkg
 PKG_CDN            := d1yihgixbnrglp.cloudfront.net
 
 PWD        := $(shell pwd)
@@ -183,8 +184,9 @@ ESCAPE_PKG = \
 	echo '$($(1)_FILE)' | perl -lpe 's/([^A-Za-z0-9])/sprintf("%%%02X", ord($$$$1))/seg'
 
 BACKUP_DOWNLOAD = \
-    (echo "MXE Warning! Downloading $(1) from backup." >&2 && \
+    (echo "MXE Warning! Downloading $(1) from backup at $(PKG_MIRROR)/`$(call ESCAPE_PKG,$(1))`" >&2 && \
     ($(WGET) -O- $(PKG_MIRROR)/`$(call ESCAPE_PKG,$(1))` || \
+	$(WGET) -O- $(PKG_MIRROR_ALT)/`$(call ESCAPE_PKG,$(1))` || \
     $(WGET) -O- $(PKG_CDN)/`$(call ESCAPE_PKG,$(1))`))
 
 DOWNLOAD_PKG_ARCHIVE = \
