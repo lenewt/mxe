@@ -98,28 +98,3 @@ index cea62fb..d6bbcd2 100755
          QCONFIG_FLAGS="$QCONFIG_FLAGS QT_POSIX_IPC"
 -- 
 2.1.4
-
-
-From ae120a60f2f31c911a451036ecd826b4486e2d3f Mon Sep 17 00:00:00 2001
-From: Mark Brand <mabrand@mabrand.nl>
-Date: Tue, 6 Oct 2015 09:53:20 +0200
-Subject: [PATCH 5/5] fix building mysql driver under mingw
-
-Change-Id: I9c4e821d5b3a6919566c6b684cb4916827feb6a9
-
-diff --git a/src/sql/drivers/mysql/qsql_mysql.pri b/src/sql/drivers/mysql/qsql_mysql.pri
-index 3cfb614..8b7063f 100644
---- a/src/sql/drivers/mysql/qsql_mysql.pri
-+++ b/src/sql/drivers/mysql/qsql_mysql.pri
-@@ -4,7 +4,7 @@ SOURCES += $$PWD/qsql_mysql.cpp
- QMAKE_CXXFLAGS *= $$QT_CFLAGS_MYSQL
- LIBS += $$QT_LFLAGS_MYSQL
- 
--unix {
-+if (unix|mingw) {
-     isEmpty(QT_LFLAGS_MYSQL) {
-         !contains(LIBS, .*mysqlclient.*):!contains(LIBS, .*mysqld.*) {
-             use_libmysqlclient_r:LIBS += -lmysqlclient_r
--- 
-2.1.4
-
