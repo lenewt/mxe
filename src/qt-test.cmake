@@ -1,4 +1,5 @@
-# This file is part of MXE. See LICENSE.md for licensing information.
+# This file is part of MXE.
+# See index.html for further information.
 
 # partial module - included by src/cmake/CMakeLists.txt
 

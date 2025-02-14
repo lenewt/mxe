@@ -1,22 +1,23 @@
-# This file is part of MXE. See LICENSE.md for licensing information.
+# This file is part of MXE.
+# See index.html for further information.
 
 PKG             := qtimageformats
-$(PKG)_WEBSITE  := https://www.qt.io/
-$(PKG)_DESCR    := Qt
 $(PKG)_IGNORE   :=
 $(PKG)_VERSION   = $(qtbase_VERSION)
-$(PKG)_CHECKSUM := 39fa9a16477d31e3225938c8c9169cda4605dfd2e8811c5c945077bf9f0b453d
+$(PKG)_CHECKSUM := c97fee00c602f9f089fea480546d6e9d61a2b2297c2f163bfd9f8aba92b754a5
 $(PKG)_SUBDIR    = $(subst qtbase,qtimageformats,$(qtbase_SUBDIR))
 $(PKG)_FILE      = $(subst qtbase,qtimageformats,$(qtbase_FILE))
 $(PKG)_URL       = $(subst qtbase,qtimageformats,$(qtbase_URL))
-$(PKG)_DEPS     := cc jasper libmng libwebp qtbase tiff
+$(PKG)_DEPS     := gcc libmng qtbase tiff
 
 define $(PKG)_UPDATE
     echo $(qtbase_VERSION)
 endef
 
 define $(PKG)_BUILD
-    cd '$(1)' && '$(PREFIX)/$(TARGET)/qt5/bin/qmake'
+    # invoke qmake with removed debug options as a workaround for
+    # https://bugreports.qt-project.org/browse/QTBUG-30898
+    cd '$(1)' && '$(PREFIX)/$(TARGET)/qt5/bin/qmake' CONFIG-='debug debug_and_release'
     $(MAKE) -C '$(1)' -j '$(JOBS)'
     $(MAKE) -C '$(1)' -j 1 install
 endef
