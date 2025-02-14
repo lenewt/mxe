@@ -6,6 +6,7 @@ $(PKG)_IGNORE   :=
 $(PKG)_VERSION   = $(qtbase_VERSION)
 $(PKG)_CHECKSUM := 7cc7ca99f41587c188303670499e5c75101f9a8cb6178e8f29cc941e637d957f
 $(PKG)_SUBDIR    = $(subst qtbase,qtmultimedia,$(qtbase_SUBDIR))
+$(PKG)_PATCHES  := $(realpath $(sort $(wildcard $(dir $(lastword $(MAKEFILE_LIST)))/$(PKG)-[0-9]*.patch)))
 $(PKG)_FILE      = $(subst qtbase,qtmultimedia,$(qtbase_FILE))
 $(PKG)_URL       = $(subst qtbase,qtmultimedia,$(qtbase_URL))
 $(PKG)_DEPS     := gcc qtbase

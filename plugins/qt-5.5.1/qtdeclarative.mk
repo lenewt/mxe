@@ -6,6 +6,7 @@ $(PKG)_IGNORE   :=
 $(PKG)_VERSION   = $(qtbase_VERSION)
 $(PKG)_CHECKSUM := 5fd14eefb83fff36fb17681693a70868f6aaf6138603d799c16466a094b26791
 $(PKG)_SUBDIR    = $(subst qtbase,qtdeclarative,$(qtbase_SUBDIR))
+$(PKG)_PATCHES  := $(realpath $(sort $(wildcard $(dir $(lastword $(MAKEFILE_LIST)))/$(PKG)-[0-9]*.patch)))
 $(PKG)_FILE      = $(subst qtbase,qtdeclarative,$(qtbase_FILE))
 $(PKG)_URL       = $(subst qtbase,qtdeclarative,$(qtbase_URL))
 $(PKG)_DEPS     := gcc qtbase qtsvg qtxmlpatterns

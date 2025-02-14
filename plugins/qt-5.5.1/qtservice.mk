@@ -6,6 +6,7 @@ $(PKG)_VERSION  := ad9bc46
 $(PKG)_CHECKSUM := c708cb14637811b5d9060e33e4afe904a9d1c9f39a9befdc3a570f219825075b
 $(PKG)_SUBDIR   := qtproject-qt-solutions-$($(PKG)_VERSION)
 $(PKG)_FILE     := qt-solutions-$($(PKG)_VERSION).tar.gz
+$(PKG)_PATCHES  := $(realpath $(sort $(wildcard $(dir $(lastword $(MAKEFILE_LIST)))/$(PKG)-[0-9]*.patch)))
 $(PKG)_URL      := https://github.com/qtproject/qt-solutions/tarball/$($(PKG)_VERSION)/$($(PKG)_FILE)
 $(PKG)_DEPS     := gcc qtbase
 
