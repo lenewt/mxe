@@ -1,18 +1,21 @@
-# This file is part of MXE.
-# See index.html for further information.
+# This file is part of MXE. See LICENSE.md for licensing information.
 
 PKG             := gmp
+$(PKG)_WEBSITE  := https://gmplib.org/
+$(PKG)_DESCR    := GMP
 $(PKG)_IGNORE   :=
-$(PKG)_VERSION  := 6.0.0
-$(PKG)_CHECKSUM := 7f8e9a804b9c6d07164cf754207be838ece1219425d64e28cfa3e70d5c759aaf
+$(PKG)_VERSION  := 6.3.0
+$(PKG)_CHECKSUM := a3c2b80201b89e68616f4ad30bc66aee4927c3ce50e33929ca819d5c43538898
 $(PKG)_SUBDIR   := $(PKG)-$($(PKG)_VERSION)
-$(PKG)_FILE     := $(PKG)-$($(PKG)_VERSION)a.tar.bz2
-$(PKG)_URL      := http://ftp.gnu.org/gnu/$(PKG)/$($(PKG)_FILE)
-$(PKG)_URL_2    := ftp://ftp.cs.tu-berlin.de/pub/gnu/$(PKG)/$($(PKG)_FILE)
-$(PKG)_DEPS     := gcc
+$(PKG)_FILE     := $(PKG)-$($(PKG)_VERSION).tar.xz
+$(PKG)_URL      := https://gmplib.org/download/$(PKG)/$($(PKG)_FILE)
+$(PKG)_TARGETS  := $(BUILD) $(MXE_TARGETS)
+$(PKG)_DEPS     := cc
+
+$(PKG)_DEPS_$(BUILD) :=
 
 define $(PKG)_UPDATE
-    $(WGET) -q -O- 'http://www.gmplib.org/' | \
+    $(WGET) -q -O- 'https://gmplib.org/' | \
     grep '<a href="' | \
     $(SED) -n 's,.*gmp-\([0-9][^>]*\)\.tar.*,\1,p' | \
     $(SORT) -V | \
@@ -41,8 +44,7 @@ endef
 define $(PKG)_BUILD_$(BUILD)
     mkdir '$(1).build'
     cd    '$(1).build' && '$(1)/configure' \
-        --prefix='$(PREFIX)/$(TARGET)' \
-        --disable-shared
+        $(MXE_CONFIGURE_OPTS)
     $(MAKE) -C '$(1).build' -j '$(JOBS)' man1_MANS=
     $(MAKE) -C '$(1).build' -j 1 install man1_MANS=
 endef

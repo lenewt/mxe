@@ -1,39 +1,40 @@
-# This file is part of MXE.
-# See index.html for further information.
+# This file is part of MXE. See LICENSE.md for licensing information.
 
 PKG             := binutils
-$(PKG)_IGNORE   :=
-$(PKG)_VERSION  := 2.25.1
-$(PKG)_CHECKSUM := b5b14added7d78a8d1ca70b5cb75fef57ce2197264f4f5835326b0df22ac9f22
+$(PKG)_WEBSITE  := https://www.gnu.org/software/binutils/
+$(PKG)_DESCR    := GNU Binutils
+$(PKG)_VERSION  := 2.38
+$(PKG)_CHECKSUM := 070ec71cf077a6a58e0b959f05a09a35015378c2d8a51e90f3aeabfe30590ef8
 $(PKG)_SUBDIR   := binutils-$($(PKG)_VERSION)
 $(PKG)_FILE     := binutils-$($(PKG)_VERSION).tar.bz2
-$(PKG)_URL      := http://ftp.gnu.org/pub/gnu/binutils/$($(PKG)_FILE)
-$(PKG)_URL_2    := ftp://ftp.cs.tu-berlin.de/pub/gnu/binutils/$($(PKG)_FILE)
-$(PKG)_DEPS     := pkgconf
+$(PKG)_URL      := https://ftp.gnu.org/gnu/binutils/$($(PKG)_FILE)
+$(PKG)_URL_2    := https://ftpmirror.gnu.org/binutils/$($(PKG)_FILE)
+$(PKG)_DEPS     :=
 
 define $(PKG)_UPDATE
-    $(WGET) -q -O- 'http://ftp.gnu.org/gnu/binutils/?C=M;O=D' | \
+    $(WGET) -q -O- 'https://ftp.gnu.org/gnu/binutils/?C=M;O=D' | \
     $(SED) -n 's,.*<a href="binutils-\([0-9][^"]*\)\.tar.*,\1,p' | \
     $(SORT) -V | \
     tail -1
 endef
 
 define $(PKG)_BUILD
-    cd '$(1)' && ./configure \
+    cd '$(BUILD_DIR)' && '$(SOURCE_DIR)/configure' \
+        $(MXE_DISABLE_DOC_OPTS) \
         --target='$(TARGET)' \
         --build='$(BUILD)' \
         --prefix='$(PREFIX)' \
         --disable-multilib \
+        --enable-deterministic-archives \
         --with-gcc \
         --with-gnu-ld \
         --with-gnu-as \
         --disable-nls \
         --disable-shared \
         --disable-werror
-    $(MAKE) -C '$(1)' -j '$(JOBS)'
-    $(MAKE) -C '$(1)' -j 1 install
+    $(TOUCH) -d2020-01-01 '$(SOURCE_DIR)/gas/doc/.dirstamp'
+    $(MAKE) -C '$(BUILD_DIR)' -j '$(JOBS)'
+    $(MAKE) -C '$(BUILD_DIR)' -j 1 $(INSTALL_STRIP_TOOLCHAIN)
 
-    rm -f $(addprefix $(PREFIX)/$(TARGET)/bin/, ar as dlltool ld ld.bfd nm objcopy objdump ranlib strip)
+    rm -f $(addprefix $(PREFIX)/$(TARGET)/bin/, ar as dlltool ld ld.bfd nm objcopy objdump ranlib readelf strip)
 endef
-
-$(PKG)_BUILD_$(BUILD) :=
