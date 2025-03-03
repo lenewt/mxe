@@ -8,23 +8,15 @@ $(PKG)_CHECKSUM := e2882295097e47fe089f8ac741a95fef47e0a73a3f3cdf21b56990638f626
 $(PKG)_SUBDIR   := $(PKG)-everywhere-opensource-src-$($(PKG)_VERSION)
 $(PKG)_FILE     := $(PKG)-everywhere-opensource-src-$($(PKG)_VERSION).tar.gz
 $(PKG)_URL      := http://download.qt.io/official_releases/qt/4.8/$($(PKG)_VERSION)/$($(PKG)_FILE)
-$(PKG)_DEPS     := gcc dbus freetds jpeg libmng libpng openssl postgresql sqlite tiff zlib
+$(PKG)_DEPS     := cc bzip2 expat freetds freetype gnutls harfbuzz jpeg libffi libmng libpng \
+                   libwebp libxml2 libxslt openssl pcre postgresql sqlite tiff zlib
 
-define $(PKG)_UPDATE
-    $(WGET) -q -O- http://download.qt-project.org/official_releases/qt/4.8/ | \
-    $(SED) -n 's,.*href="\(4\.[0-9]\.[^/]*\)/".*,\1,p' | \
-    grep -iv -- '-rc' | \
-    $(SORT) -V | \
-    tail -1
-endef
+$(PKG)_PATCHES  := $(realpath $(sort $(wildcard $(addsuffix /*.patch, $(dir $(lastword $(MAKEFILE_LIST)))))))
 
-define $(PKG)_BUILD
-    cd '$(1)' && QTDIR='$(1)' ./bin/syncqt
-    cd '$(1)' && \
-        OPENSSL_LIBS="`'$(TARGET)-pkg-config' --libs-only-l openssl`" \
-        PSQL_LIBS="-lpq -lsecur32 `'$(TARGET)-pkg-config' --libs-only-l openssl` -lws2_32" \
-        SYBASE_LIBS="-lsybdb `'$(TARGET)-pkg-config' --libs-only-l gnutls` -liconv -lws2_32" \
-        ./configure \
+define $(PKG)_BUILD_SHARED
+    # Continue with the original build
+    cd '$(1)' && ./configure \
+        $(MXE_CONFIGURE_OPTS) \
         -opensource \
         -confirm-license \
         -fast \

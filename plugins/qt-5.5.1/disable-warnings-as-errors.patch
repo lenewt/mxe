@@ -1,0 +1,12 @@
+diff -urN a/qtbase/mkspecs/win32-g++/qmake.conf b/qtbase/mkspecs/win32-g++/qmake.conf
+--- a/qtbase/mkspecs/win32-g++/qmake.conf	2015-10-13 04:35:28.000000000 +0000
++++ b/qtbase/mkspecs/win32-g++/qmake.conf	2023-05-29 00:00:00.000000000 +0000
+@@ -26,7 +26,7 @@
+ QMAKE_LEXFLAGS          =
+ QMAKE_YACC              = byacc
+ QMAKE_YACCFLAGS         = -d
+-QMAKE_CFLAGS            = -pipe -fno-keep-inline-dllexport -Werror
++QMAKE_CFLAGS            = -pipe -fno-keep-inline-dllexport
+ QMAKE_CFLAGS_DEPS       = -M
+ QMAKE_CFLAGS_WARN_ON    = -Wall -Wextra
+ QMAKE_CFLAGS_WARN_OFF   = -w 

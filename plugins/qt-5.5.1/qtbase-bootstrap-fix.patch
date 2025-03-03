@@ -1,0 +1,22 @@
+This file is part of MXE.
+See index.html for further information.
+
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Claude AI <claude@anthropic.com>
+Date: Sun, 3 Mar 2024 12:00:00 +0000
+Subject: [PATCH] Fix bootstrap build by removing moc_qbuffer.cpp include
+
+diff --git a/src/corelib/io/qbuffer.cpp b/src/corelib/io/qbuffer.cpp
+index 0000000..0000000 100644
+--- a/src/corelib/io/qbuffer.cpp
++++ b/src/corelib/io/qbuffer.cpp
+@@ -470,7 +470,9 @@ qint64 QBuffer::writeData(const char *data, qint64 len)
+     return i;
+ }
+ 
++#ifndef QT_BOOTSTRAPPED
+ # include "moc_qbuffer.cpp"
++#endif
+ 
+ QT_END_NAMESPACE
+ 

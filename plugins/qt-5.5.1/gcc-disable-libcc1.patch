@@ -1,0 +1,23 @@
+diff -urN a/src/gcc.mk b/src/gcc.mk
+--- a/src/gcc.mk	2023-05-29 00:00:00.000000000 +0000
++++ b/src/gcc.mk	2023-05-29 00:00:00.000000000 +0000
+@@ -35,6 +35,7 @@
+         --with-gnu-as \
+         --disable-nls \
+         $(if $(BUILD_STATIC),--disable-shared) \
++        --disable-libcc1 \
+         --disable-multilib \
+         --without-x \
+         --disable-win32-registry \
+@@ -103,8 +104,10 @@
+     -rmdir '$(PREFIX)/lib/gcc/$(TARGET)/lib/')
+
+     # cc1libdir isn't passed to subdirs so install correctly and rm
+-    $(MAKE) -C '$(BUILD_DIR)/libcc1' -j 1 install cc1libdir='$(PREFIX)/lib/gcc/$(TARGET)/$($(PKG)_RELEASE)'
+-    -rm -f '$(PREFIX)/lib/'libcc1*
++    if [ -d '$(BUILD_DIR)/libcc1' ]; then \
++        $(MAKE) -C '$(BUILD_DIR)/libcc1' -j 1 install cc1libdir='$(PREFIX)/lib/gcc/$(TARGET)/$($(PKG)_RELEASE)'; \
++        -rm -f '$(PREFIX)/lib/'libcc1*; \
++    fi
+
+     # overwrite default specs to mimic stack protector handling of glibc
