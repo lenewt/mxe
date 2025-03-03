@@ -22,7 +22,9 @@ define $(PKG)_BUILD
     # ICU is buggy. See #653. TODO: reenable it some time in the future.
     cd '$(1)' && \
         OPENSSL_LIBS="`'$(TARGET)-pkg-config' --libs-only-l openssl`" \
+        PSQL_LIBS="-lpq -lsecur32 `'$(TARGET)-pkg-config' --libs-only-l openssl` -lws2_32" \
         SYBASE_LIBS="-lsybdb `'$(TARGET)-pkg-config' --libs-only-l gnutls` -liconv -lws2_32" \
+        QMAKE_CXXFLAGS+="-Wno-error" \
         ./configure \
             -opensource \
             -confirm-license \
@@ -40,10 +42,11 @@ define $(PKG)_BUILD
             -accessibility \
             -nomake examples \
             -nomake tests \
-            -plugin-sql-mysql \
             -plugin-sql-sqlite \
             -plugin-sql-odbc \
             -plugin-sql-tds -D Q_USE_SYBASE \
+            -no-sql-psql \
+            -no-sql-mysql \
             -system-zlib \
             -system-libpng \
             -system-libjpeg \
@@ -54,13 +57,16 @@ define $(PKG)_BUILD
             -system-pcre \
             -openssl-linked \
             -dbus-linked \
+            -no-pch \
+            -no-warnings-are-errors \
+            -no-reduce-relocations \
             -v
 
     # invoke qmake with removed debug options as a workaround for
     # https://bugreports.qt-project.org/browse/QTBUG-30898
-    $(MAKE) -C '$(1)' -j '$(JOBS)' QMAKE="$(1)/bin/qmake CONFIG-='debug debug_and_release'"
+    $(MAKE) -C '$(1)' -j '$(JOBS)' QMAKE="$(1)/bin/qmake CONFIG-='debug debug_and_release'" CXXFLAGS="-Wno-error"
     rm -rf '$(PREFIX)/$(TARGET)/qt5'
-    $(MAKE) -C '$(1)' -j 1 install
+    $(MAKE) -C '$(1)' -j 1 install CXXFLAGS="-Wno-error"
     ln -sf '$(PREFIX)/$(TARGET)/qt5/bin/qmake' '$(PREFIX)/bin/$(TARGET)'-qmake-qt5
 
     mkdir            '$(1)/test-qt'
