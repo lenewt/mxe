@@ -25,7 +25,7 @@ define $(PKG)_BUILD_SHARED_DISABLED
     $(SED) -i 's,\.exe,,' '$(1)/Tools/qmake/mkspecs/features/functions.prf'
     # invoke qmake with removed debug options as a workaround for
     # https://bugreports.qt-project.org/browse/QTBUG-30898
-    cd '$(1)' && '$(PREFIX)/$(TARGET)/qt5/bin/qmake' FLEX=flex CONFIG-='debug debug_and_release'
+    cd '$(1)' && '$(PREFIX)/$(TARGET)/qt5.5.1/bin/qmake' FLEX=flex CONFIG-='debug debug_and_release'
     $(MAKE) -C '$(1)' -j '$(JOBS)'
     $(MAKE) -C '$(1)' -j 1 install
 endef

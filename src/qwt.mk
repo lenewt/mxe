@@ -21,11 +21,11 @@ define $(PKG)_BUILD
         echo "QWT_CONFIG -= QwtDll" >> '$(1)/qwtconfig.pri')
 
     # build
-    cd '$(1)/src' && $(PREFIX)/$(TARGET)/qt5/bin/qmake
+    cd '$(1)/src' && $(PREFIX)/$(TARGET)/qt5.5.1/bin/qmake
     $(MAKE) -C '$(1)/src' -f 'Makefile.Release' -j '$(JOBS)' install
 
     #build sinusplot example to test linkage
-    cd '$(1)/examples/sinusplot' && $(PREFIX)/$(TARGET)/qt5/bin/qmake
+    cd '$(1)/examples/sinusplot' && $(PREFIX)/$(TARGET)/qt5.5.1/bin/qmake
     $(MAKE) -C '$(1)/examples/sinusplot' -f 'Makefile.Release' -j '$(JOBS)'
 
     # install
