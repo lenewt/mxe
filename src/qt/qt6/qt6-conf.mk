@@ -58,7 +58,7 @@ define $(PKG)_BUILD
 #         -o '$(BUILD_DIR).test-pkgconfig/moc_qt-test.cpp' \
 #         -I'$(BUILD_DIR).test-pkgconfig' \
 #         '$(TOP_DIR)/src/qt-test.hpp'
-#     '$(PREFIX)/$(TARGET)/qt5/bin/rcc' -name qt-test -o '$(BUILD_DIR).test-pkgconfig/qrc_qt-test.cpp' '$(TOP_DIR)/src/qt-test.qrc'
+#     '$(PREFIX)/$(TARGET)/qt5.15.15/bin/rcc' -name qt-test -o '$(BUILD_DIR).test-pkgconfig/qrc_qt-test.cpp' '$(TOP_DIR)/src/qt-test.qrc'
 #     '$(TARGET)-g++' \
 #         -W -Wall -std=c++0x -pedantic \
 #         '$(TOP_DIR)/src/qt-test.cpp' \

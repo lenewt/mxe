@@ -9,8 +9,8 @@ $(PKG)_GH_CONF  := qt/qtsystems/branches/dev
 $(PKG)_DEPS     := cc qtbase qtdeclarative qtxmlpatterns
 
 define $(PKG)_BUILD
-    cd '$(1)' && '$(PREFIX)/$(TARGET)/qt5/bin/syncqt.pl' -version 5.4.0
-    cd '$(1)' && '$(PREFIX)/$(TARGET)/qt5/bin/qmake'
+    cd '$(1)' && '$(PREFIX)/$(TARGET)/qt5.15.15/bin/syncqt.pl' -version 5.4.0
+    cd '$(1)' && '$(PREFIX)/$(TARGET)/qt5.15.15/bin/qmake'
     $(MAKE) -C '$(1)' -j '$(JOBS)'
     $(MAKE) -C '$(1)' -j 1 install
 endef

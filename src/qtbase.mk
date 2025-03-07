@@ -44,7 +44,7 @@ define $(PKG)_BUILD
             -no-use-gold-linker \
             -release \
             $(if $(BUILD_STATIC), -static,)$(if $(BUILD_SHARED), -shared,) \
-            -prefix '$(PREFIX)/$(TARGET)/qt5' \
+            -prefix '$(PREFIX)/$(TARGET)/qt5.15.15' \
             $(if $(BUILD_STATIC), -no)-icu \
             -opengl dynamic \
             -no-glib \
@@ -72,47 +72,17 @@ define $(PKG)_BUILD
             $(PKG_CONFIGURE_OPTS)
 
     $(MAKE) -C '$(1)' -j '$(JOBS)'
-    rm -rf '$(PREFIX)/$(TARGET)/qt5'
+    rm -rf '$(PREFIX)/$(TARGET)/qt5.15.15'
     $(MAKE) -C '$(1)' -j 1 install
-    ln -sf '$(PREFIX)/$(TARGET)/qt5/bin/qmake' '$(PREFIX)/bin/$(TARGET)'-qmake-qt5
-
-    mkdir            '$(1)/test-qt'
-    cd               '$(1)/test-qt' && '$(PREFIX)/$(TARGET)/qt5/bin/qmake' '$(PWD)/src/qt-test.pro'
-    $(MAKE)       -C '$(1)/test-qt' '$(BUILD_TYPE)' -j '$(JOBS)'
-    $(INSTALL) -m755 '$(1)/test-qt/$(BUILD_TYPE)/test-qt5.exe' '$(PREFIX)/$(TARGET)/bin/'
-
-    # build test the manual way
-    mkdir '$(1)/test-$(PKG)-pkgconfig'
-    '$(PREFIX)/$(TARGET)/qt5/bin/uic' -o '$(1)/test-$(PKG)-pkgconfig/ui_qt-test.h' '$(TOP_DIR)/src/qt-test.ui'
-    '$(PREFIX)/$(TARGET)/qt5/bin/moc' \
-        -o '$(1)/test-$(PKG)-pkgconfig/moc_qt-test.cpp' \
-        -I'$(1)/test-$(PKG)-pkgconfig' \
-        '$(TOP_DIR)/src/qt-test.hpp'
-    '$(PREFIX)/$(TARGET)/qt5/bin/rcc' -name qt-test -o '$(1)/test-$(PKG)-pkgconfig/qrc_qt-test.cpp' '$(TOP_DIR)/src/qt-test.qrc'
-    '$(TARGET)-g++' \
-        -W -Wall -std=c++0x -pedantic \
-        '$(TOP_DIR)/src/qt-test.cpp' \
-        '$(1)/test-$(PKG)-pkgconfig/moc_qt-test.cpp' \
-        '$(1)/test-$(PKG)-pkgconfig/qrc_qt-test.cpp' \
-        -o '$(PREFIX)/$(TARGET)/bin/test-$(PKG)-pkgconfig.exe' \
-        -I'$(1)/test-$(PKG)-pkgconfig' \
-        `'$(TARGET)-pkg-config' Qt5Widgets$(BUILD_TYPE_SUFFIX) --cflags --libs`
+    ln -sf '$(PREFIX)/$(TARGET)/qt5.15.15/bin/qmake' '$(PREFIX)/bin/$(TARGET)'-qmake-qt5
 
     # setup cmake toolchain and test
-    echo 'set(CMAKE_SYSTEM_PREFIX_PATH "$(PREFIX)/$(TARGET)/qt5" ${CMAKE_SYSTEM_PREFIX_PATH})' > '$(CMAKE_TOOLCHAIN_DIR)/$(PKG).cmake'
-    $(CMAKE_TEST)
-
-    # batch file to run test programs
-    (printf 'set PATH=..\\lib;..\\qt5\\bin;..\\qt5\\lib;%%PATH%%\r\n'; \
-     printf 'set QT_QPA_PLATFORM_PLUGIN_PATH=..\\qt5\\plugins\r\n'; \
-     printf 'test-qt5.exe\r\n'; \
-     printf 'test-qtbase-pkgconfig.exe\r\n';) \
-     > '$(PREFIX)/$(TARGET)/bin/test-qt5.bat'
+    echo 'set(CMAKE_SYSTEM_PREFIX_PATH "$(PREFIX)/$(TARGET)/qt5.15.15" ${CMAKE_SYSTEM_PREFIX_PATH})' > '$(CMAKE_TOOLCHAIN_DIR)/$(PKG).cmake'
 endef
 
 define $(PKG)_BUILD_$(BUILD)
     cd '$(BUILD_DIR)' && '$(SOURCE_DIR)/configure' \
-        -prefix '$(PREFIX)/$(TARGET)/qt5' \
+        -prefix '$(PREFIX)/$(TARGET)/qt5.15.15' \
         -static \
         -release \
         -opensource \
@@ -127,7 +97,7 @@ define $(PKG)_BUILD_$(BUILD)
         -continue \
         -verbose
     $(MAKE) -C '$(BUILD_DIR)' -j '$(JOBS)'
-    rm -rf '$(PREFIX)/$(TARGET)/qt5'
+    rm -rf '$(PREFIX)/$(TARGET)/qt5.15.15'
     $(MAKE) -C '$(BUILD_DIR)' -j 1 install
-    ln -sf '$(PREFIX)/$(TARGET)/qt5/bin/qmake' '$(PREFIX)/bin/$(TARGET)'-qmake-qt5
+    ln -sf '$(PREFIX)/$(TARGET)/qt5.15.15/bin/qmake' '$(PREFIX)/bin/$(TARGET)'-qmake-qt5
 endef

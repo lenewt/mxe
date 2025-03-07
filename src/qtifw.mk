@@ -44,7 +44,7 @@ define $(PKG)_BUILD_STATIC
     '$(PREFIX)/bin/$(BUILD)-binarycreator' \
         -c config/config.xml \
         -p packages \
-        -t '$(PREFIX)/$(TARGET)/qt5/bin/installerbase.exe' \
+        -t '$(PREFIX)/$(TARGET)/qt5.15.15/bin/installerbase.exe' \
         '/tmp/test-$(PKG)-tutorialinstaller.exe' && \
     rm -rf '$(PREFIX)/$(TARGET)/bin/test-$(PKG)-tutorialinstaller.exe'* && \
     mv -fv '/tmp/test-$(PKG)-tutorialinstaller.exe'* '$(PREFIX)/$(TARGET)/bin/'

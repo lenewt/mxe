@@ -14,7 +14,7 @@ $(PKG)_DEPS     := cc icu4c libxml2 libxslt libwebp qtbase qtmultimedia qtquickc
 
 define $(PKG)_BUILD_SHARED
     cd '$(BUILD_DIR)' && $(TARGET)-cmake '$(SOURCE_DIR)' \
-        -DCMAKE_INSTALL_PREFIX=$(PREFIX)/$(TARGET)/qt5 \
+        -DCMAKE_INSTALL_PREFIX=$(PREFIX)/$(TARGET)/qt5.15.15 \
         -DCMAKE_CXX_FLAGS='-fpermissive' \
         -DEGPF_DEPS='Qt5Core Qt5Gui Qt5Multimedia Qt5Widgets Qt5WebKit' \
         -DPORT=Qt \

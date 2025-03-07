@@ -10,7 +10,7 @@ $(PKG)_GH_CONF  := bluetiger9/SmtpClient-for-Qt/branches/v1.1
 $(PKG)_DEPS     := cc qtbase
 
 define $(PKG)_BUILD
-    cd '$(1)' && '$(PREFIX)/$(TARGET)/qt5/bin/qmake' \
+    cd '$(1)' && '$(PREFIX)/$(TARGET)/qt5.15.15/bin/qmake' \
         -after \
         'CONFIG -= dll' \
         'CONFIG += create_prl create_pc' \
