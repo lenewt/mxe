@@ -22,7 +22,7 @@ define $(PKG)_BUILD
 
     # build test as qmake project
     mkdir '$(BUILD_DIR).test-qmake'
-    cd '$(BUILD_DIR).test-qmake' && '$(PREFIX)/$(TARGET)/qt5/bin/qmake' \
+    cd '$(BUILD_DIR).test-qmake' && '$(PREFIX)/$(TARGET)/qt5.14.2/bin/qmake' \
         'greaterThan(QT_GCC_MAJOR_VERSION, 8): QMAKE_CXXFLAGS_WARN_ON += -Wno-deprecated-copy' \
         '$(PWD)/src/qca-test.pro'
     $(MAKE) -C '$(BUILD_DIR).test-qmake' -j 1
@@ -40,7 +40,7 @@ define $(PKG)_BUILD
         -W -Wall -Werror -std=gnu++11 -Wno-deprecated-copy \
         '$(PWD)/src/qca-test.cpp' \
         -o '$(PREFIX)/$(TARGET)/bin/test-$(PKG)-pkgconfig.exe' \
-        $(if $(BUILD_STATIC), -L'$(PREFIX)/$(TARGET)/qt5/plugins/crypto' -lqca-ossl) \
+        $(if $(BUILD_STATIC), -L'$(PREFIX)/$(TARGET)/qt5.14.2/plugins/crypto' -lqca-ossl) \
         `'$(TARGET)-pkg-config' qca2-qt5 --cflags --libs`
 endef
 

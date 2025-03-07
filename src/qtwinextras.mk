@@ -16,7 +16,7 @@ define $(PKG)_UPDATE
 endef
 
 define $(PKG)_BUILD
-    cd '$(1)' && '$(PREFIX)/$(TARGET)/qt5/bin/qmake' \
+    cd '$(1)' && '$(PREFIX)/$(TARGET)/qt5.14.2/bin/qmake' \
         -after \
         'LIBS_PRIVATE += -lgdi32'
     $(MAKE) -C '$(1)' -j '$(JOBS)'

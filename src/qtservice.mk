@@ -16,7 +16,7 @@ define $(PKG)_UPDATE
 endef
 
 define $(PKG)_BUILD
-    cd '$(1)/qtservice/buildlib' && '$(PREFIX)/$(TARGET)/qt5/bin/qmake' \
+    cd '$(1)/qtservice/buildlib' && '$(PREFIX)/$(TARGET)/qt5.14.2/bin/qmake' \
         '-after' \
         'CONFIG -= dll debug_and_release build_all' \
         'CONFIG += create_prl create_pc' \

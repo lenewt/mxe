@@ -9,7 +9,7 @@ $(PKG)_GH_CONF  := stachenov/quazip/tags,v
 $(PKG)_DEPS     := cc qtbase zlib
 
 define $(PKG)_BUILD
-    cd '$(BUILD_DIR)' && '$(PREFIX)/$(TARGET)/qt5/bin/qmake' '$(SOURCE_DIR)' \
+    cd '$(BUILD_DIR)' && '$(PREFIX)/$(TARGET)/qt5.14.2/bin/qmake' '$(SOURCE_DIR)' \
         'static:CONFIG += staticlib' \
         PREFIX=$(PREFIX)/$(TARGET) \
         -after \

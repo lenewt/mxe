@@ -159,7 +159,7 @@ index 1111111..2222222 100644
  else()
 -  set(ECM_MKSPECS_INSTALL_DIR mkspecs/modules CACHE PATH "The directory where mkspecs will be installed to.")
 +  if(MINGW)
-+    set(ECM_MKSPECS_INSTALL_DIR share/qt5/mkspecs/modules CACHE PATH "The directory where mkspecs will be installed to.")
++    set(ECM_MKSPECS_INSTALL_DIR share/qt5.14.2/mkspecs/modules CACHE PATH "The directory where mkspecs will be installed to.")
 +  else()
 +    set(ECM_MKSPECS_INSTALL_DIR mkspecs/modules CACHE PATH "The directory where mkspecs will be installed to.")
 +  endif()
