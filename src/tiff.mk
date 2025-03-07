@@ -3,13 +3,13 @@
 
 PKG             := tiff
 $(PKG)_IGNORE   :=
-$(PKG)_VERSION  := 4.0.3
-$(PKG)_CHECKSUM := 652e97b78f1444237a82cbcfe014310e776eb6f0
+$(PKG)_VERSION  := 4.0.6
+$(PKG)_CHECKSUM := 280e27704eaca5f592b82e71ac0c78b87395e2de
 $(PKG)_SUBDIR   := tiff-$($(PKG)_VERSION)
 $(PKG)_FILE     := tiff-$($(PKG)_VERSION).tar.gz
 $(PKG)_URL      := http://download.osgeo.org/libtiff/$($(PKG)_FILE)
 $(PKG)_URL_2    := ftp://ftp.remotesensing.org/libtiff/$($(PKG)_FILE)
-$(PKG)_DEPS     := gcc zlib jpeg xz
+$(PKG)_DEPS     := gcc jpeg xz zlib
 
 define $(PKG)_UPDATE
     $(WGET) -q -O- 'http://www.remotesensing.org/libtiff/' | \
