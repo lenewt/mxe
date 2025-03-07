@@ -17,7 +17,7 @@ endef
 define $(PKG)_BUILD_SHARED
     # looks for build tools with .exe suffix and tries to use win_flex
     $(SED) -i 's,\.exe,,' '$(1)/Tools/qmake/mkspecs/features/functions.prf'
-    cd '$(1)' && '$(PREFIX)/$(TARGET)/qt5/bin/qmake' FLEX=flex
+    cd '$(1)' && '$(PREFIX)/$(TARGET)/qt5.4.2/bin/qmake' FLEX=flex
     $(MAKE) -C '$(1)' -j '$(JOBS)'
     $(MAKE) -C '$(1)' -j 1 install
 endef

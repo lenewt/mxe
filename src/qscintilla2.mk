@@ -19,7 +19,7 @@ define $(PKG)_UPDATE
 endef
 
 define $(PKG)_BUILD
-    cd '$(1)/Qt4Qt5' && '$(PREFIX)/$(TARGET)/qt5/bin/qmake' qscintilla.pro
+    cd '$(1)/Qt4Qt5' && '$(PREFIX)/$(TARGET)/qt5.4.2/bin/qmake' qscintilla.pro
     $(MAKE) -C '$(1)/Qt4Qt5' -j '$(JOBS)'
     $(MAKE) -C '$(1)/Qt4Qt5' -j '$(JOBS)' install
 

@@ -12,7 +12,7 @@ $(PKG)_DEPS     := gcc qtbase qtdeclarative
 $(PKG)_UPDATE    = $(call MXE_GET_GITHUB_SHA, qtproject/qt3d, master)
 
 define $(PKG)_BUILD
-    cd '$(1)' && '$(PREFIX)/$(TARGET)/qt5/bin/qmake' CONFIG+=git_build
+    cd '$(1)' && '$(PREFIX)/$(TARGET)/qt5.4.2/bin/qmake' CONFIG+=git_build
     $(MAKE) -C '$(1)' -j '$(JOBS)'
     $(MAKE) -C '$(1)' -j 1 install
 endef
