@@ -22,7 +22,7 @@ define $(PKG)_BUILD
 
     # build test as qmake project
     mkdir '$(BUILD_DIR).test-qmake'
-    cd '$(BUILD_DIR).test-qmake' && '$(PREFIX)/$(TARGET)/qt5/bin/qmake' '$(PWD)/src/qca-test.pro'
+    cd '$(BUILD_DIR).test-qmake' && '$(PREFIX)/$(TARGET)/qt5.9.3/bin/qmake' '$(PWD)/src/qca-test.pro'
     $(MAKE) -C '$(BUILD_DIR).test-qmake' -j 1
     $(INSTALL) -m755 '$(BUILD_DIR).test-qmake/$(BUILD_TYPE)/test-qca-qmake.exe' '$(PREFIX)/$(TARGET)/bin/'
 
@@ -38,7 +38,7 @@ define $(PKG)_BUILD
         -W -Wall -Werror -std=gnu++11 \
         '$(PWD)/src/qca-test.cpp' \
         -o '$(PREFIX)/$(TARGET)/bin/test-$(PKG)-pkgconfig.exe' \
-        $(if $(BUILD_STATIC), -L'$(PREFIX)/$(TARGET)/qt5/plugins/crypto' -lqca-ossl) \
+        $(if $(BUILD_STATIC), -L'$(PREFIX)/$(TARGET)/qt5.9.3/plugins/crypto' -lqca-ossl) \
         `'$(TARGET)-pkg-config' qca2-qt5 --cflags --libs`
 endef
 

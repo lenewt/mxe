@@ -16,7 +16,7 @@ define $(PKG)_UPDATE
 endef
 
 define $(PKG)_BUILD_SHARED
-    cd '$(BUILD_DIR)' && '$(PREFIX)/$(TARGET)/qt5/bin/qmake' '$(SOURCE_DIR)'
+    cd '$(BUILD_DIR)' && '$(PREFIX)/$(TARGET)/qt5.9.3/bin/qmake' '$(SOURCE_DIR)'
     $(MAKE) -C '$(BUILD_DIR)' -j '$(JOBS)'
     $(MAKE) -C '$(BUILD_DIR)' -j 1 install
 
