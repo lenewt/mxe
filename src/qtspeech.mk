@@ -5,7 +5,7 @@ $(PKG)_WEBSITE   = $(qtbase_WEBSITE)
 $(PKG)_DESCR    := Qt
 $(PKG)_IGNORE   :=
 $(PKG)_VERSION   = $(qtbase_VERSION)
-$(PKG)_CHECKSUM := 01526024437dfc1e4f652e0b883fc3333260321aacee4c51774018bf86bb99b0
+$(PKG)_CHECKSUM := 75f0018f1e0b63751fa038d7b0b8c0b7abf0f26460c635fc4af36f31a01a9baa
 $(PKG)_SUBDIR    = $(subst qtbase,qtspeech,$(qtbase_SUBDIR))
 $(PKG)_FILE      = $(subst qtbase,qtspeech,$(qtbase_FILE))
 $(PKG)_URL       = $(subst qtbase,qtspeech,$(qtbase_URL))
@@ -16,7 +16,7 @@ define $(PKG)_UPDATE
 endef
 
 define $(PKG)_BUILD
-    cd '$(BUILD_DIR)' && '$(PREFIX)/$(TARGET)/qt5.9.3/bin/qmake' '$(SOURCE_DIR)'
+    cd '$(BUILD_DIR)' && '$(PREFIX)/$(TARGET)/qt5.9.5/bin/qmake' '$(SOURCE_DIR)'
     $(MAKE) -C '$(BUILD_DIR)' -j '$(JOBS)'
     $(MAKE) -C '$(BUILD_DIR)' -j 1 install
 endef

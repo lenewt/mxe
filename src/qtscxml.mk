@@ -5,7 +5,7 @@ $(PKG)_WEBSITE  := https://www.qt.io/
 $(PKG)_DESCR    := Qt
 $(PKG)_IGNORE   :=
 $(PKG)_VERSION   = $(qtbase_VERSION)
-$(PKG)_CHECKSUM := d8f51fa8eddd09fef29d8fad6e570e9ca9403469543ab10cb5cfad738786a81b
+$(PKG)_CHECKSUM := 016a2add51e58dfd50a6f5b2b2323997af67a0693c39b8baf95cd9c89018d74e
 $(PKG)_SUBDIR    = $(subst qtbase,qtscxml,$(qtbase_SUBDIR))
 $(PKG)_FILE      = $(subst qtbase,qtscxml,$(qtbase_FILE))
 $(PKG)_URL       = $(subst qtbase,qtscxml,$(qtbase_URL))
@@ -16,7 +16,7 @@ define $(PKG)_UPDATE
 endef
 
 define $(PKG)_BUILD
-    cd '$(1)' && '$(PREFIX)/$(TARGET)/qt5.9.3/bin/qmake'
+    cd '$(1)' && '$(PREFIX)/$(TARGET)/qt5.9.5/bin/qmake'
     $(MAKE) -C '$(1)' -j '$(JOBS)'
     $(MAKE) -C '$(1)' -j 1 install
 endef

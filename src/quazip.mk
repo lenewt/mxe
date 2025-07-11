@@ -17,7 +17,7 @@ define $(PKG)_UPDATE
 endef
 
 define $(PKG)_BUILD
-    cd '$(BUILD_DIR)' && '$(PREFIX)/$(TARGET)/qt5.9.3/bin/qmake' '$(SOURCE_DIR)' \
+    cd '$(BUILD_DIR)' && '$(PREFIX)/$(TARGET)/qt5.9.5/bin/qmake' '$(SOURCE_DIR)' \
         $(if $(BUILD_STATIC), CONFIG\+=staticlib) \
         PREFIX=$(PREFIX)/$(TARGET)
     $(MAKE) -C '$(BUILD_DIR)' -j '$(JOBS)'

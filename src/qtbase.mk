@@ -4,15 +4,15 @@ PKG             := qtbase
 $(PKG)_WEBSITE  := https://www.qt.io/
 $(PKG)_DESCR    := Qt
 $(PKG)_IGNORE   :=
-$(PKG)_VERSION  := 5.9.3
-$(PKG)_CHECKSUM := 9e7c44005e7691dc7c85165bd4510282c47f0163521f4973eab71dbdb39a9982
+$(PKG)_VERSION  := 5.9.5
+$(PKG)_CHECKSUM := 7d3ef666d2efcf260a5a0780a1ccd49f897e839e1d9932225be4859ec26730d4
 $(PKG)_SUBDIR   := $(PKG)-opensource-src-$($(PKG)_VERSION)
 $(PKG)_FILE     := $(PKG)-opensource-src-$($(PKG)_VERSION).tar.xz
-$(PKG)_URL      := https://download.qt.io/official_releases/qt/5.9/$($(PKG)_VERSION)/submodules/$($(PKG)_FILE)
+$(PKG)_URL      := https://download.qt.io/new_archive/qt/5.9/$($(PKG)_VERSION)/submodules/$($(PKG)_FILE)
 $(PKG)_DEPS     := gcc dbus fontconfig freetds freetype harfbuzz jpeg libmysqlclient libpng openssl pcre2 postgresql sqlite zlib
 
 define $(PKG)_UPDATE
-    $(WGET) -q -O- https://download.qt.io/official_releases/qt/5.8/ | \
+    $(WGET) -q -O- https://download.qt.io/new_archive/qt/5.9/ | \
     $(SED) -n 's,.*href="\(5\.[0-9]\.[^/]*\)/".*,\1,p' | \
     grep -iv -- '-rc' | \
     sort |
@@ -39,7 +39,7 @@ define $(PKG)_BUILD
             -no-use-gold-linker \
             -release \
             -static \
-            -prefix '$(PREFIX)/$(TARGET)/qt5.9.3' \
+            -prefix '$(PREFIX)/$(TARGET)/qt5.9.5' \
             -no-icu \
             -opengl desktop \
             -no-glib \
@@ -51,12 +51,10 @@ define $(PKG)_BUILD
             -plugin-sql-sqlite \
             -plugin-sql-odbc \
             -plugin-sql-psql \
-            -plugin-sql-tds -D Q_USE_SYBASE \
             -qt-zlib \
             -qt-libpng \
             -qt-libjpeg \
             -qt-sqlite \
-            -fontconfig \
             -system-freetype \
             -system-harfbuzz \
             -qt-pcre \
@@ -67,17 +65,17 @@ define $(PKG)_BUILD
             $($(PKG)_CONFIGURE_OPTS)
 
     $(MAKE) -C '$(1)' -j '$(JOBS)'
-    rm -rf '$(PREFIX)/$(TARGET)/qt5.9.3'
+    rm -rf '$(PREFIX)/$(TARGET)/qt5.9.5'
     $(MAKE) -C '$(1)' -j 1 install
-    ln -sf '$(PREFIX)/$(TARGET)/qt5.9.3/bin/qmake' '$(PREFIX)/bin/$(TARGET)'-qmake-qt5
+    ln -sf '$(PREFIX)/$(TARGET)/qt5.9.5/bin/qmake' '$(PREFIX)/bin/$(TARGET)'-qmake-qt5
 
     # setup cmake toolchain
-    echo 'set(CMAKE_SYSTEM_PREFIX_PATH "$(PREFIX)/$(TARGET)/qt5.9.3" ${CMAKE_SYSTEM_PREFIX_PATH})' > '$(CMAKE_TOOLCHAIN_DIR)/$(PKG).cmake'
+    echo 'set(CMAKE_SYSTEM_PREFIX_PATH "$(PREFIX)/$(TARGET)/qt5.9.5" ${CMAKE_SYSTEM_PREFIX_PATH})' > '$(CMAKE_TOOLCHAIN_DIR)/$(PKG).cmake'
 
     # add libs to CMake config of Qt5Core to fix static linking
-    $(SED) -i 's,set(_Qt5Core_LIB_DEPENDENCIES \"\"),set(_Qt5Core_LIB_DEPENDENCIES \"ole32;uuid;ws2_32;advapi32;shell32;user32;kernel32;mpr;version;winmm;z;pcre2-16\"),g' '$(PREFIX)/$(TARGET)/qt5.9.3/lib/cmake/Qt5Core/Qt5CoreConfig.cmake'
-    $(SED) -i 's,set(_Qt5Gui_LIB_DEPENDENCIES \"Qt5::Core\"),set(_Qt5Gui_LIB_DEPENDENCIES \"Qt5::Core;ole32;uuid;ws2_32;advapi32;shell32;user32;kernel32;mpr;version;winmm;z;pcre2-16;png16;harfbuzz;z\"),g' '$(PREFIX)/$(TARGET)/qt5.9.3/lib/cmake/Qt5Gui/Qt5GuiConfig.cmake'
-    $(SED) -i 's,set(_Qt5Widgets_LIB_DEPENDENCIES \"Qt5::Gui;Qt5::Core\"),set(_Qt5Widgets_LIB_DEPENDENCIES \"Qt5::Gui;Qt5::Core;gdi32;comdlg32;oleaut32;imm32;opengl32;png16;harfbuzz;ole32;uuid;ws2_32;advapi32;shell32;user32;kernel32;mpr;version;winmm;z;pcre2-16;shell32;uxtheme;dwmapi\"),g' '$(PREFIX)/$(TARGET)/qt5.9.3/lib/cmake/Qt5Widgets/Qt5WidgetsConfig.cmake'
+    $(SED) -i 's,set(_Qt5Core_LIB_DEPENDENCIES \"\"),set(_Qt5Core_LIB_DEPENDENCIES \"ole32;uuid;ws2_32;advapi32;shell32;user32;kernel32;mpr;version;winmm;z;pcre2-16\"),g' '$(PREFIX)/$(TARGET)/qt5.9.5/lib/cmake/Qt5Core/Qt5CoreConfig.cmake'
+    $(SED) -i 's,set(_Qt5Gui_LIB_DEPENDENCIES \"Qt5::Core\"),set(_Qt5Gui_LIB_DEPENDENCIES \"Qt5::Core;ole32;uuid;ws2_32;advapi32;shell32;user32;kernel32;mpr;version;winmm;z;pcre2-16;png16;harfbuzz;z\"),g' '$(PREFIX)/$(TARGET)/qt5.9.5/lib/cmake/Qt5Gui/Qt5GuiConfig.cmake'
+    $(SED) -i 's,set(_Qt5Widgets_LIB_DEPENDENCIES \"Qt5::Gui;Qt5::Core\"),set(_Qt5Widgets_LIB_DEPENDENCIES \"Qt5::Gui;Qt5::Core;gdi32;comdlg32;oleaut32;imm32;opengl32;png16;harfbuzz;ole32;uuid;ws2_32;advapi32;shell32;user32;kernel32;mpr;version;winmm;z;pcre2-16;shell32;uxtheme;dwmapi\"),g' '$(PREFIX)/$(TARGET)/qt5.9.5/lib/cmake/Qt5Widgets/Qt5WidgetsConfig.cmake'
 endef
 
 
