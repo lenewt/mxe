@@ -8,7 +8,7 @@ $(PKG)_CHECKSUM := 409641eadf0ed1c7794797a6f5a0b0195b5580b282166e5ec5629c6bcda6a
 $(PKG)_SUBDIR   := mesa-$($(PKG)_VERSION)
 $(PKG)_FILE     := mesa-$($(PKG)_VERSION).tar.xz
 $(PKG)_URL      := https://archive.mesa3d.org/$($(PKG)_FILE)
-$(PKG)_DEPS     := cc meson-wrapper zlib zstd
+$(PKG)_DEPS     := cc $(BUILD)~python-mako meson-wrapper zlib zstd
 
 define $(PKG)_UPDATE
     $(call GET_LATEST_VERSION, https://archive.mesa3d.org, mesa-)
