@@ -10,8 +10,8 @@ $(PKG)_TARGETS := $(BUILD) $(MXE_TARGETS)
 # ensure conf is also built for a minimal `make qt6-qtbase`
 qt6-qtbase: qt6-conf
 
-QT6_PREFIX   = '$(PREFIX)/$(TARGET)/$(MXE_QT6_ID)'
-QT6_QMAKE    = '$(TARGET)-$(MXE_QT6_ID)-qmake'
+QT6_PREFIX   = '$(PREFIX)/$(TARGET)/qt6.8.3'
+QT6_QMAKE    = '$(TARGET)-qt6.8.3-qmake'
 QT6_QT_CMAKE = '$(QT6_PREFIX)/$(if $(findstring mingw,$(TARGET)),bin,libexec)/qt-cmake-private' \
                    -DCMAKE_INSTALL_PREFIX='$(QT6_PREFIX)'
 
@@ -30,17 +30,17 @@ define $(PKG)_BUILD
     # qmake is a script that calls native qmake with a conf file in its current dir
     (echo '#!/bin/sh'; \
      echo 'exec "$(QT6_PREFIX)/bin/qmake" "$$@"') \
-             > '$(PREFIX)/bin/$(TARGET)-$(MXE_QT6_ID)-qmake'
-    chmod 0755 '$(PREFIX)/bin/$(TARGET)-$(MXE_QT6_ID)-qmake'
+             > '$(PREFIX)/bin/$(TARGET)-qt6.8.3-qmake'
+    chmod 0755 '$(PREFIX)/bin/$(TARGET)-qt6.8.3-qmake'
 
     # test qmake
     mkdir '$(BUILD_DIR).test-qmake'
     cd '$(BUILD_DIR).test-qmake' && \
         $(QT6_QMAKE) \
-        -after TARGET=test-$(MXE_QT6_ID)-qmake \
+        -after TARGET=test-qt6.8.3-qmake \
         '$(PWD)/src/qt-test.pro'
     $(MAKE) -C '$(BUILD_DIR).test-qmake' '$(BUILD_TYPE)' -j '$(JOBS)'
-    $(INSTALL) -m755 '$(BUILD_DIR).test-qmake/$(BUILD_TYPE)/test-$(MXE_QT6_ID)-qmake.exe' '$(PREFIX)/$(TARGET)/bin/'
+    $(INSTALL) -m755 '$(BUILD_DIR).test-qmake/$(BUILD_TYPE)/test-qt6.8.3-qmake.exe' '$(PREFIX)/$(TARGET)/bin/'
 
     # test cmake
     $(QT6_QT_CMAKE) -S '$(PWD)/src/cmake/test' -B '$(BUILD_DIR).test-cmake' \
@@ -69,11 +69,11 @@ define $(PKG)_BUILD
 #         `'$(TARGET)-pkg-config' Qt6Widgets$(BUILD_TYPE_SUFFIX) --cflags --libs`
 
     # batch file to run test programs
-    (printf 'set PATH=..\\lib;..\\$(MXE_QT6_ID)\\bin;..\\$(MXE_QT6_ID)\\lib;%%PATH%%\r\n'; \
-     printf 'set QT_QPA_PLATFORM_PLUGIN_PATH=..\\$(MXE_QT6_ID)\\plugins\r\n'; \
-     printf 'test-$(MXE_QT6_ID)-qmake.exe\r\n'; \
-     printf 'test-$(MXE_QT6_ID)-cmake.exe\r\n';) \
-     > '$(PREFIX)/$(TARGET)/bin/test-$(MXE_QT6_ID).bat'
+    (printf 'set PATH=..\\lib;..\\qt6.8.3\\bin;..\\qt6.8.3\\lib;%%PATH%%\r\n'; \
+     printf 'set QT_QPA_PLATFORM_PLUGIN_PATH=..\\qt6.8.3\\plugins\r\n'; \
+     printf 'test-qt6.8.3-qmake.exe\r\n'; \
+     printf 'test-qt6.8.3-cmake.exe\r\n';) \
+     > '$(PREFIX)/$(TARGET)/bin/test-qt6.8.3.bat'
 endef
 
 define $(PKG)_BUILD_$(BUILD)

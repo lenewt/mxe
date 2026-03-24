@@ -17,7 +17,7 @@ define $(PKG)_UPDATE
 endef
 
 define $(PKG)_BUILD
-    cd '$(1)/qtservice/buildlib' && '$(PREFIX)/$(TARGET)/qt6/bin/qmake'
+    cd '$(1)/qtservice/buildlib' && '$(PREFIX)/$(TARGET)/qt6.8.3/bin/qmake'
     $(MAKE) -C '$(1)/qtservice/buildlib' -j '$(JOBS)'
     $(MAKE) -C '$(1)/qtservice/buildlib' -j 1 install
 endef

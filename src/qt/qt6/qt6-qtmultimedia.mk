@@ -8,7 +8,7 @@ $(eval $(QT6_METADATA))
 $(PKG)_CHECKSUM := 32e82307d783172a3b984cc3c47c5e4e8b819cee3cbfc702c7012c47f15f6b01
 $(PKG)_DEPS     := cc qt6-conf qt6-qtbase qt6-qtshadertools ffmpeg
 
-QT6_PREFIX   = '$(PREFIX)/$(TARGET)/$(MXE_QT6_ID)'
+QT6_PREFIX   = '$(PREFIX)/$(TARGET)/qt6.8.3'
 QT6_QT_CMAKE = '$(QT6_PREFIX)/$(if $(findstring mingw,$(TARGET)),bin,libexec)/qt-cmake-private' \
                    -DCMAKE_INSTALL_PREFIX='$(QT6_PREFIX)'
 

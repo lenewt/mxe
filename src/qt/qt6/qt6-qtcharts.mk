@@ -8,7 +8,7 @@ $(eval $(QT6_METADATA))
 $(PKG)_CHECKSUM := 34aa5f5a48bb7481c9bd62172696831c73c2cef327aa6b871b1861693b3e0914
 $(PKG)_DEPS     := cc qt6-conf qt6-qtbase
 
-QT6_PREFIX   = '$(PREFIX)/$(TARGET)/$(MXE_QT6_ID)'
+QT6_PREFIX   = '$(PREFIX)/$(TARGET)/qt6.8.3'
 QT6_QT_CMAKE = '$(QT6_PREFIX)/$(if $(findstring mingw,$(TARGET)),bin,libexec)/qt-cmake-private' \
                    -DCMAKE_INSTALL_PREFIX='$(QT6_PREFIX)'
 

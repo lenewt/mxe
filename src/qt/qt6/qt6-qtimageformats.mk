@@ -8,7 +8,7 @@ $(eval $(QT6_METADATA))
 $(PKG)_CHECKSUM := 049bfb99845e4801672aca07c3c4fc4c140f932a3a33faa899419579e33ef1c8
 $(PKG)_DEPS     := cc qt6-conf qt6-qtbase jasper libmng libwebp tiff
 
-QT6_PREFIX   = '$(PREFIX)/$(TARGET)/$(MXE_QT6_ID)'
+QT6_PREFIX   = '$(PREFIX)/$(TARGET)/qt6.8.3'
 QT6_QT_CMAKE = '$(QT6_PREFIX)/$(if $(findstring mingw,$(TARGET)),bin,libexec)/qt-cmake-private' \
                    -DCMAKE_INSTALL_PREFIX='$(QT6_PREFIX)'
 

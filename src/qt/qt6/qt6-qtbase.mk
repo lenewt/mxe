@@ -25,15 +25,15 @@ define $(PKG)_UPDATE
 endef
 
 define $(PKG)_BUILD
-    rm -rf '$(PREFIX)/$(TARGET)/$(MXE_QT6_ID)'
+    rm -rf '$(PREFIX)/$(TARGET)/qt6.8.3'
     # review $(SOURCE_DIR)/cmake/configure-cmake-mapping.md
     PKG_CONFIG="${TARGET}-pkg-config" \
     PKG_CONFIG_SYSROOT_DIR="/" \
     PKG_CONFIG_LIBDIR="$(PREFIX)/$(TARGET)/lib/pkgconfig" \
     '$(TARGET)-cmake' -S '$(SOURCE_DIR)' -B '$(BUILD_DIR)' \
         -G Ninja \
-        -DCMAKE_INSTALL_PREFIX='$(PREFIX)/$(TARGET)/$(MXE_QT6_ID)' \
-        -DQT_HOST_PATH='$(PREFIX)/$(BUILD)/$(MXE_QT6_ID)' \
+        -DCMAKE_INSTALL_PREFIX='$(PREFIX)/$(TARGET)/qt6.8.3' \
+        -DQT_HOST_PATH='$(PREFIX)/$(BUILD)/qt6.8.3' \
         -DQT_QMAKE_DEVICE_OPTIONS='CROSS_COMPILE=$(TARGET)-;PKG_CONFIG=$(TARGET)-pkg-config' \
         -DPKG_CONFIG_EXECUTABLE='$(PREFIX)/bin/$(TARGET)-pkg-config' \
         -DQT_QMAKE_TARGET_MKSPEC=win32-g++ \
@@ -65,18 +65,18 @@ define $(PKG)_BUILD
     cmake --install '$(BUILD_DIR)'
     $(if $(BUILD_STATIC),$(SED) -i -e 's/^QMAKE_PRL_LIBS .*/& -lodbc32/;' \
 	      -e 's/^QMAKE_PRL_LIBS_FOR_CMAKE .*/&;-lodbc32/;' \
-              '$(PREFIX)/$(TARGET)/$(MXE_QT6_ID)/plugins/sqldrivers/qsqlodbc.prl',)
+              '$(PREFIX)/$(TARGET)/qt6.8.3/plugins/sqldrivers/qsqlodbc.prl',)
 
     mkdir -p '$(CMAKE_TOOLCHAIN_DIR)'
-    echo 'set(QT_HOST_PATH "$(PREFIX)/$(BUILD)/$(MXE_QT6_ID)")' \
+    echo 'set(QT_HOST_PATH "$(PREFIX)/$(BUILD)/qt6.8.3")' \
         > '$(CMAKE_TOOLCHAIN_DIR)/$(PKG).cmake'
 endef
 
 define $(PKG)_BUILD_$(BUILD)
-    rm -rf '$(PREFIX)/$(TARGET)/$(MXE_QT6_ID)'
+    rm -rf '$(PREFIX)/$(TARGET)/qt6.8.3'
     '$(TARGET)-cmake' -S '$(SOURCE_DIR)' -B '$(BUILD_DIR)' \
         -G Ninja \
-        -DCMAKE_INSTALL_PREFIX='$(PREFIX)/$(TARGET)/$(MXE_QT6_ID)' \
+        -DCMAKE_INSTALL_PREFIX='$(PREFIX)/$(TARGET)/qt6.8.3' \
         -DQT_BUILD_{TESTS,EXAMPLES}=OFF \
         -DBUILD_WITH_PCH=OFF \
         -DFEATURE_{eventfd,glib,harfbuzz,icu,opengl,openssl,zstd}=OFF \
